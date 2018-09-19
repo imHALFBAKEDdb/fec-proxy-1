@@ -1,0 +1,28 @@
+{
+  "name": "fec-fmdb-proxy",
+  "version": "1.0.0",
+  "description": "fec-fmdb",
+  "main": "./server/index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/servandoberna7/fec-proxy.git"
+  },
+  "author": "servandojberna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/servandoberna7/fec-proxy/issues"
+  },
+  "homepage": "https://github.com/servandoberna7/fec-proxy#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "http-proxy": "^1.17.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.4"
+  }
+}
