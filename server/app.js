@@ -20,34 +20,65 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../dist", "index.html"));
 });
 
-app.get("/suggested/api/s", (req, res) => {
-  axios
-    .get("/suggested/api/s")
-    .then(({ data }) => {
-      res.send(JSON.stringify({ data }));
-    })
-    .catch(error => {
-      console.log("ERROR SUGGESTED:", error);
-    });
-});
-
-app.get("/middle/api/movie", (req, res) => {
-  console.log(req.url);
-  // res.send(‘hello world’);
-  const { movieId } = req.params;
+app.get("/main/api/title/:id", (req, res) => {
+  const { id } = req.params;
   const options = {
-    url: `http://middle:1337/api/movie/`,
-    params: {
-      movieId
-    },
-    method: `get`
+    url: `http://13.57.36.154:8000/api/title/${id}`,
+    method: "get"
   };
   axios(options)
     .then(results => {
-      console.log(results);
+      res.send(results.data);
+    })
+    .catch(error => {
+      console.log("ERROR main/api/title/", error);
+    });
+});
+
+app.get("/middle/api/movie/:movieId", (req, res) => {
+  console.log("req.params", req.params);
+  const { movieId } = req.params;
+  console.log(movieId);
+  const options = {
+    url: `http://13.57.36.154:1337/api/movie/${movieId}`,
+    method: "get"
+  };
+  axios(options)
+    .then(results => {
+      console.log("Proxy succes");
       res.send(JSON.stringify(results.data));
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log("ERROR middle/api/movie/", err));
+});
+
+app.get("/middle/api/review/:reviewId", (req, res) => {
+  console.log("req.params", req.params);
+  const { reviewId } = req.params;
+  const options = {
+    url: `http://13.57.36.154:1337/api/review/${reviewId}`,
+    method: "get"
+  };
+  axios(options)
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => {
+      console.log("ERROR from proxy server", err);
+    });
+});
+
+app.get("/suggested/api/s", (req, res) => {
+  const options = {
+    url: "http://13.57.36.154:8080/suggested/api/s",
+    method: "get"
+  };
+  axios(options)
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 });
 
 module.exports = app;
